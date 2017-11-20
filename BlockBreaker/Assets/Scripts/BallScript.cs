@@ -2,16 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(AudioSource))]
 public class BallScript : MonoBehaviour {
 
     public PaddleScript paddle;
     Vector3 ballPaddleDiff;
     bool gameStarted = false;
+    AudioSource audio;
 
 
 	// Use this for initialization
 	void Start () {
+
+        audio = GetComponent<AudioSource>();
+        paddle = GameObject.FindObjectOfType<PaddleScript>();
         ballPaddleDiff = this.transform.position - paddle.transform.position;
+
+
 	}
 	
 	// Update is called once per frame
@@ -28,4 +36,9 @@ public class BallScript : MonoBehaviour {
 
         }
 	}
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        audio.Play();
+    }
 }
